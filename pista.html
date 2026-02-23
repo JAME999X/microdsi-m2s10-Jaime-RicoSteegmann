@@ -4,21 +4,177 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>MicroDSI · Pistas</title>
-  <link rel="stylesheet" href="assets/styles.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary: #6366f1;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #1e293b;
+      --muted: #64748b;
+      --border: #e2e8f0;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      overflow-x: hidden; /* Evitar scroll horizontal en el body */
+    }
+
+    /* --- HEADER (Consistente con los demás) --- */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 0;
+    }
+
+    .container-nav {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand b { color: var(--primary); font-size: 1.1rem; }
+    .brand span { display: block; font-size: 0.7rem; color: var(--muted); text-transform: uppercase; font-weight: 700; }
+
+    .nav { display: flex; align-items: center; gap: 0.75rem; }
+
+    /* Selector de Track Estilizado */
+    .track-pill {
+      background: #f1f5f9;
+      padding: 6px 12px;
+      border-radius: 50px;
+      display: flex;
+      align-items: center;
+      border: 1px solid var(--border);
+    }
+
+    .track-pill small { font-weight: 700; color: var(--muted); margin-right: 8px; font-size: 0.7rem; }
+
+    select#trackSel {
+      border: none;
+      background: transparent;
+      font-weight: 600;
+      color: var(--text);
+      outline: none;
+      cursor: pointer;
+    }
+
+    /* Botones */
+    .btn {
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text);
+      transition: all 0.2s;
+    }
+
+    .btn.primary { background: var(--primary); color: white; }
+    .btn.primary:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3); }
+
+    /* --- BARRA DE PROGRESO --- */
+    .progress-panel {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+    }
+
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 8px;
+    }
+
+    .progress-header b { font-size: 0.9rem; color: var(--primary); }
+    .footerHint { font-size: 0.75rem; color: var(--muted); }
+
+    .progress-bar-bg {
+      width: 100%;
+      height: 8px;
+      background: #e2e8f0;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    #prog {
+      display: block;
+      height: 100%;
+      width: 10%; /* Dinámico por JS */
+      background: linear-gradient(90deg, var(--primary), #818cf8);
+      border-radius: 10px;
+      transition: width 0.4s ease;
+    }
+
+    /* --- CONTENEDOR DE PISTAS (Horizontal) --- */
+    .pistaWrap {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding: 2rem 1.5rem 4rem;
+      gap: 1.5rem;
+      scrollbar-width: none; /* Firefox */
+    }
+
+    .pistaWrap::-webkit-scrollbar { display: none; } /* Chrome/Safari */
+
+    /* Estilo para las tarjetas que inyecta app.js */
+    .pista-card {
+      flex: 0 0 85%; /* En móvil ocupa casi todo el ancho */
+      max-width: 500px;
+      background: var(--card);
+      padding: 2rem;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05);
+      scroll-snap-align: center;
+      transition: transform 0.3s;
+    }
+
+    @media (min-width: 768px) {
+      .pista-card { flex: 0 0 400px; }
+    }
+
+    .pista-card h3 { margin-top: 0; color: var(--primary); }
+    .pista-card p { font-size: 0.95rem; color: #475569; }
+
+    .pista-card input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-top: 1rem;
+      box-sizing: border-box;
+      font-family: inherit;
+    }
+
+  </style>
 </head>
 <body>
+
   <header class="topbar">
-    <div class="row">
+    <div class="container-nav">
       <div class="brand">
         <b>MicroDSI</b>
         <span>Pistas · Caso guiado (M2-S10)</span>
       </div>
 
       <nav class="nav">
-        <!-- Selector de Track (controlado por assets/app.js) -->
-        <div class="btn" style="padding:8px 10px; border-radius:999px;">
-          <small style="margin-right:8px; color:var(--muted);">Track</small>
-          <select id="trackSel" style="border:none; background:transparent; color:var(--text); outline:none;">
+        <div class="track-pill">
+          <small>TRACK</small>
+          <select id="trackSel">
             <option value="itsm">ITSM Triage</option>
             <option value="hr">HR</option>
             <option value="proc">Procurement</option>
@@ -32,17 +188,24 @@
     </div>
   </header>
 
-  <main class="container">
-    <div class="panel">
-      <b>Progreso</b>
-      <div class="progress"><i id="prog"></i></div>
-      <span class="footerHint">
-        Desplázate horizontalmente (trackpad/rueda). Cada pista pide una respuesta breve con 1 dato o condición.
-      </span>
+  <main class="progress-panel">
+    <div class="progress-header">
+      <b>Tu Progreso</b>
+      <span class="footerHint">Desliza para ver más pistas ➜</span>
+    </div>
+    <div class="progress-bar-bg">
+      <i id="prog"></i>
     </div>
   </main>
 
-  <main id="pistaWrap" class="pistaWrap"></main>
+  <!-- Este contenedor será llenado por assets/app.js -->
+  <main id="pistaWrap" class="pistaWrap">
+    <!-- Ejemplo de cómo el JS debería estructurar una pista para que se vea bien: -->
+    <div class="pista-card">
+      <h3>Cargando pistas...</h3>
+      <p>Selecciona un track arriba para comenzar el análisis del caso.</p>
+    </div>
+  </main>
 
   <script src="assets/app.js"></script>
 </body>
