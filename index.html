@@ -4,57 +4,216 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>MicroDSI · M2-S10</title>
-  <link rel="stylesheet" href="assets/styles.css"/>
+  <!-- Google Fonts: Inter para un look moderno -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary: #6366f1; /* Indigo moderno */
+      --primary-soft: #eef2ff;
+      --accent: #f43f5e; /* Rosa/Rojo para detalles */
+      --bg: #ffffff;
+      --bg-alt: #f8fafc;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --radius: 12px;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* --- HEADER --- */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 0;
+    }
+
+    .container-wide {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand b { font-size: 1.2rem; color: var(--primary); letter-spacing: -0.5px; }
+    .brand span { font-size: 0.75rem; color: var(--muted); display: block; text-transform: uppercase; font-weight: 600; }
+
+    .nav { display: flex; gap: 0.75rem; }
+
+    /* --- BOTONES --- */
+    .btn {
+      text-decoration: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn.primary { background: var(--primary); color: white; border: 1px solid var(--primary); }
+    .btn.primary:hover { transform: translateY(-1px); box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.3); }
+    .btn.outline { border: 1px solid var(--border); color: var(--text); background: white; }
+    .btn.outline:hover { background: var(--bg-alt); }
+
+    /* --- HERO SECTION --- */
+    .hero {
+      padding: 4rem 0 3rem;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 2.75rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, #1e293b 0%, #6366f1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--muted);
+      max-width: 650px;
+      margin: 0 auto 2rem;
+    }
+
+    /* --- CHIPS --- */
+    .chips {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+    }
+
+    .chip {
+      background: var(--primary-soft);
+      color: var(--primary);
+      padding: 6px 14px;
+      border-radius: 99px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    /* --- KPI / DASHBOARD BOXES --- */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 4rem;
+    }
+
+    .box {
+      background: var(--bg-alt);
+      padding: 1.5rem;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      text-align: left;
+      transition: transform 0.2s;
+    }
+    
+    .box:hover { border-color: var(--primary); transform: translateY(-2px); }
+
+    .box b { display: block; font-size: 0.85rem; text-transform: uppercase; color: var(--primary); margin-bottom: 0.5rem; }
+    .box span { font-size: 0.95rem; font-weight: 500; color: var(--text); }
+
+    /* --- GRID INFORMACIÓN --- */
+    .grid2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      padding-bottom: 5rem;
+    }
+
+    .panel {
+      background: white;
+      padding: 2rem;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+    }
+
+    .panel h3 { margin-top: 0; font-size: 1.25rem; display: flex; align-items: center; gap: 10px; }
+    .panel p { color: var(--muted); font-size: 0.95rem; }
+
+    .sep { border: 0; border-top: 1px solid var(--border); margin: 2rem 0; }
+
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2rem; }
+      .kpi-grid, .grid2 { grid-template-columns: 1fr; }
+      .header-content { flex-direction: column; gap: 1rem; }
+    }
+  </style>
 </head>
 <body>
+
   <header class="topbar">
-    <div class="row">
+    <div class="container-wide header-content">
       <div class="brand">
         <b>MicroDSI</b>
-        <span>M2-S10 · Identificación de Procesos</span>
+        <span>Identificación de Procesos (M2-S10)</span>
       </div>
       <nav class="nav">
-        <a class="btn" href="feed.html">Feed</a>
-        <a class="btn" href="pista.htm">Pistas</a>
-        <a class="btn primary" href="lab.html">Lab</a>
+        <a class="btn outline" href="feed.html">Feed</a>
+        <a class="btn outline" href="pista.htm">Pistas</a>
+        <a class="btn primary" href="lab.html">Laboratorio</a>
       </nav>
     </div>
   </header>
 
-  <main class="container">
+  <main class="container-wide">
     <section class="hero">
-      <h1>Modo “Mapa Mental”: desbloquea un proceso candidato 🎯</h1>
+      <h1>Desbloquea procesos con mentalidad de mapa mental 🎯</h1>
       <p>
-        Hoy vas a convertir el caos en claridad: inventario → priorización → SIPOC.
-        Avanza por tarjetas rápidas, luego resuelve un caso guiado, y termina con tu entregable en el Lab.
+        Convierte el caos en claridad operativa. Hoy aprenderás a filtrar el ruido y definir procesos ganadores mediante SIPOC y priorización objetiva.
       </p>
 
       <div class="chips">
         <span class="chip">⚡ Micro-escenas</span>
         <span class="chip">🧭 Selección con criterio</span>
-        <span class="chip">🧾 SIPOC en 1 página</span>
-        <span class="chip">⬇️ Export .md</span>
+        <span class="chip">🧾 SIPOC Estratégico</span>
+        <span class="chip">⬇️ Exportable .md</span>
       </div>
 
-      <div class="kpi">
+      <div class="kpi-grid">
         <div class="box">
           <b>Tu misión</b>
-          <span>Elegir 1 proceso ganador con números (no “porque sí”)</span>
+          <span>Elegir 1 proceso ganador basado en métricas reales.</span>
         </div>
         <div class="box">
           <b>Tu botín</b>
-          <span>Un .md listo para entregar (o copiar/pegar)</span>
+          <span>Documentación .md lista para implementar.</span>
         </div>
         <div class="box">
-          <b>Tiempo objetivo</b>
-          <span>15–25 min para dejarlo fino</span>
+          <b>Tiempo</b>
+          <span>15–25 min de foco total para resultados TOP.</span>
         </div>
       </div>
 
       <div class="actions">
-        <a class="btn primary" href="feed.html">🚀 Empezar por el Feed</a>
-        <a class="btn" href="pista.htm">🧩 Ir a Pistas</a>
-        <a class="btn" href="lab.html">🧪 Saltar al Lab</a>
+        <a class="btn primary" style="font-size: 1.1rem; padding: 0.8rem 2rem;" href="feed.html">🚀 Comenzar entrenamiento</a>
       </div>
     </section>
 
@@ -62,21 +221,21 @@
 
     <section class="grid2">
       <div class="panel">
-        <h3>Cómo jugar (sin perder tiempo)</h3>
+        <h3><span>🕹️</span> Hoja de ruta</h3>
         <p>
-          1) Feed: marca lo importante. <br/>
-          2) Pistas: completa el caso del track que elijas. <br/>
-          3) Lab: pega tu inventario, tu priorización y tu SIPOC. Exporta y listo.
+          <strong>1. Feed:</strong> Analiza las micro-lecciones y captura insights clave.<br/>
+          <strong>2. Pistas:</strong> Resuelve el caso práctico del track seleccionado.<br/>
+          <strong>3. Lab:</strong> Construye tu inventario y SIPOC. Refina y exporta.
         </p>
       </div>
 
-      <div class="panel">
-        <h3>Reglas rápidas</h3>
+      <div class="panel" style="border-left: 4px solid var(--primary);">
+        <h3><span>⚖️</span> Reglas de Oro</h3>
         <p>
-          • Un proceso L1 = <b>verbo + objeto</b>. <br/>
-          • Elige con <b>Impacto / Esfuerzo / Riesgo</b>. <br/>
-          • SIPOC con <b>4–6 pasos</b>. <br/>
-          • Si no hay dato, usa un supuesto y márcalo como tal.
+          • <strong>Naming:</strong> Usa siempre Verbo + Objeto (ej: Facturar pedido).<br/>
+          • <strong>Filtro:</strong> Evalúa Impacto vs Esfuerzo.<br/>
+          • <strong>Sintetiza:</strong> El SIPOC ideal tiene entre 4 y 6 pasos.<br/>
+          • <strong>Dato:</strong> Si falta información, crea un supuesto coherente.
         </p>
       </div>
     </section>
