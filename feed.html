@@ -3,21 +3,159 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>MicroDSI · Feed</title>
-  <link rel="stylesheet" href="assets/styles.css"/>
+  <title>MicroDSI · Feed Pro</title>
+  <!-- Google Fonts para un look más moderno -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --primary-hover: #4338ca;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #1e293b;
+      --muted: #64748b;
+      --glass: rgba(255, 255, 255, 0.8);
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    /* Header con Efecto Blur */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--glass);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      padding: 0.75rem 0;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand b {
+      font-size: 1.25rem;
+      letter-spacing: -0.02em;
+      color: var(--primary);
+    }
+
+    .brand span {
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    /* Selector Estilizado */
+    .track-pill {
+      background: #f1f5f9;
+      padding: 6px 12px;
+      border-radius: 50px;
+      display: flex;
+      align-items: center;
+      border: 1px solid #e2e8f0;
+    }
+
+    .track-pill small {
+      font-weight: 700;
+      color: var(--muted);
+      margin-right: 8px;
+    }
+
+    select#trackSel {
+      border: none;
+      background: transparent;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      outline: none;
+    }
+
+    /* Botones */
+    .btn {
+      text-decoration: none;
+      color: var(--text);
+      font-size: 0.9rem;
+      font-weight: 500;
+      padding: 8px 16px;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    .btn:hover {
+      background: #f1f5f9;
+    }
+
+    .btn.primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn.primary:hover {
+      background: var(--primary-hover);
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+    }
+
+    /* Feed Layout */
+    .feedWrap {
+      max-width: 700px; /* Feed más estrecho para mejor lectura */
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    /* Ejemplo de cómo se verían las tarjetas que inyectará tu JS */
+    .post-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      border: 1px solid #edf2f7;
+    }
+
+    @media (max-width: 768px) {
+      .container { flex-direction: column; gap: 1rem; }
+      .nav { width: 100%; justify-content: space-between; font-size: 0.8rem; }
+    }
+  </style>
 </head>
 <body>
+
   <header class="topbar">
-    <div class="row">
+    <div class="container">
       <div class="brand">
         <b>MicroDSI</b>
-        <span>Feed · Micro-lecciones (M2-S10)</span>
+        <span>Micro-lecciones (M2-S10)</span>
       </div>
 
       <nav class="nav">
-        <div class="btn" style="padding:8px 10px; border-radius:999px;">
-          <small style="margin-right:8px; color:var(--muted);">Track</small>
-          <select id="trackSel" style="border:none; background:transparent; color:var(--text); outline:none;">
+        <div class="track-pill">
+          <small>TRACK</small>
+          <select id="trackSel">
             <option value="itsm">ITSM Triage</option>
             <option value="hr">HR</option>
             <option value="proc">Procurement</option>
@@ -31,7 +169,13 @@
     </div>
   </header>
 
-  <main id="feedWrap" class="feedWrap"></main>
+  <main id="feedWrap" class="feedWrap">
+    <!-- El app.js llenará esto, pero pongo un ejemplo visual de lo que podrías generar -->
+    <div class="post-card">
+      <h3 style="margin-top:0">Cargando lecciones...</h3>
+      <p style="color:var(--muted)">Si ves este mensaje, el sistema está conectando con el laboratorio.</p>
+    </div>
+  </main>
 
   <script src="assets/app.js"></script>
 </body>
