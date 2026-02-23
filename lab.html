@@ -4,14 +4,179 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>MicroDSI · Lab</title>
-  <link rel="stylesheet" href="assets/styles.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #1e293b;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --accent: #10b981; /* Verde para éxito/meta */
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    /* --- HEADER --- */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.6rem 0;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    .row-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand b { color: var(--primary); font-size: 1.1rem; }
+    .brand span { display: block; font-size: 0.75rem; color: var(--muted); font-weight: 600; }
+
+    .nav { display: flex; gap: 0.5rem; }
+
+    /* --- BOTONES --- */
+    .btn {
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: all 0.2s;
+      border: 1px solid var(--border);
+      background: white;
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    .btn:hover { background: #f1f5f9; }
+    .btn.primary { background: var(--primary); color: white; border-color: var(--primary); }
+    .btn.primary:hover { background: var(--primary-dark); }
+
+    /* --- DASHBOARD / INTRO --- */
+    .intro-panel {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .kpi-box {
+      background: #f1f5f9;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+    }
+
+    .kpi-box b { display: block; color: var(--primary); font-size: 0.7rem; text-transform: uppercase; }
+
+    /* --- FORMULARIOS --- */
+    .workspace-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card h3 { margin-top: 0; font-size: 1rem; display: flex; align-items: center; gap: 8px; }
+    
+    label { font-size: 0.8rem; color: var(--muted); margin-bottom: 8px; font-weight: 500; }
+
+    textarea {
+      width: 100%;
+      min-height: 180px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      font-family: 'Fira Code', monospace; /* Estilo código */
+      font-size: 0.85rem;
+      resize: vertical;
+      box-sizing: border-box;
+      background: #fafafa;
+      color: #334155;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    textarea:focus { border-color: var(--primary); background: white; }
+
+    .footerHint {
+      margin-top: 10px;
+      font-size: 0.75rem;
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    /* --- OUTPUT SECTION --- */
+    .output-section {
+      background: #1e293b; /* Fondo oscuro tipo editor */
+      color: #e2e8f0;
+    }
+
+    .output-section h3 { color: #f8fafc; }
+    .output-section textarea {
+      background: #0f172a;
+      color: #38bdf8; /* Color azul cian tipo código */
+      border: 1px solid #334155;
+    }
+
+    .actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .sep { border: 0; height: 1px; background: var(--border); margin: 2rem 0; }
+
+    @media (max-width: 850px) {
+      .workspace-grid { grid-template-columns: 1fr; }
+      .kpi-row { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
+
   <header class="topbar">
-    <div class="row">
+    <div class="container row-header">
       <div class="brand">
         <b>MicroDSI</b>
-        <span>Lab · Inventario + Priorización + SIPOC</span>
+        <span>Laboratorio de Procesos · M2-S10</span>
       </div>
       <nav class="nav">
         <a class="btn" href="index.html">Inicio</a>
@@ -22,64 +187,63 @@
   </header>
 
   <main class="container">
-    <section class="panel">
-      <h3>🧪 Laboratorio</h3>
-      <p>
-        Aquí se fabrica el entregable. Escribe rápido, pero deja huella: 1 dato o condición por decisión.
-        Cuando estés listo, genera el Markdown y descárgalo.
+    <section class="intro-panel">
+      <h3 style="margin-top:0">🧪 Workspace: Fábrica de Entregables</h3>
+      <p style="font-size: 0.9rem; color: var(--muted);">
+        Escribe rápido, decide con datos. Completa las tres fases para generar tu documentación técnica.
       </p>
 
-      <div class="kpi" style="margin-top:12px">
-        <div class="box"><b>Meta</b><span>10–15 procesos L1 + Top 5 priorizados + 1 SIPOC</span></div>
-        <div class="box"><b>Tip</b><span>En priorización: justifica con volumen/tiempo/retrabajo/PII</span></div>
-        <div class="box"><b>Final</b><span>Exporta .md y te vas en paz</span></div>
+      <div class="kpi-row">
+        <div class="kpi-box"><b>Meta</b><span>10–15 L1 + Top 5 + 1 SIPOC</span></div>
+        <div class="kpi-box"><b>Tip</b><span>Justifica con volumen o retrabajo</span></div>
+        <div class="kpi-box"><b>Final</b><span>Exporta el .md y listo</span></div>
       </div>
     </section>
 
-    <hr class="sep"/>
+    <div class="workspace-grid">
+      <!-- 1) INVENTARIO -->
+      <section class="card">
+        <h3><span>📝</span> 1. Inventario (L1)</h3>
+        <label>Procesos (Verbo + Objeto)</label>
+        <textarea id="inv" placeholder="Ej: Gestionar incidencias&#10;Ej: Dar de alta proveedor..."></textarea>
+        <div class="footerHint">Filtro: Si no empieza por verbo, no es proceso.</div>
+      </section>
 
-    <section class="formRow">
-      <div class="panel">
-        <h3>1) Inventario (L1) — “Verbo + Objeto”</h3>
-        <label>10–15 procesos, uno por línea</label>
-        <textarea id="inv" placeholder="Ej: Gestionar incidencias&#10;Ej: Dar de alta proveedor&#10;Ej: Gestionar permisos&#10;..."></textarea>
-        <div class="footerHint">Atajo mental: si no empieza con un verbo, no pasa el filtro.</div>
-      </div>
+      <!-- 2) PRIORIZACIÓN -->
+      <section class="card">
+        <h3><span>⚖️</span> 2. Priorización (Top 5)</h3>
+        <label>Proceso | Impacto | Esfuerzo | Riesgo | Score</label>
+        <textarea id="prio" placeholder="Gestionar incidencias | 5 | 3 | 3 | 6000 tickets/mes&#10;Alta proveedor | 4 | 4 | 4 | compliance"></textarea>
+        <div class="footerHint">Score sugerido: Impacto - Esfuerzo - Riesgo.</div>
+      </section>
+    </div>
 
-      <div class="panel">
-        <h3>2) Priorización — Top 5</h3>
-        <label>Formato sugerido (1 por línea): Proceso | Impacto | Esfuerzo | Riesgo | Score | Nota</label>
-        <textarea id="prio" placeholder="Gestionar incidencias | 5 | 3 | 3 | -1 | 6000 tickets/mes, retrabajo 25%&#10;Alta proveedor | 4 | 4 | 4 | -4 | lead time alto, compliance&#10;..."></textarea>
-        <div class="footerHint">
-          Score recomendado: Impacto − Esfuerzo − Riesgo (o usa ratio, pero no mezcles).
-        </div>
-      </div>
-    </section>
-
-    <hr class="sep"/>
-
-    <section class="panel">
-      <h3>3) SIPOC — el “contrato” (1 página)</h3>
-      <label>Completa Suppliers / Inputs / Process (4–6 pasos) / Outputs / Customers</label>
-      <textarea id="sipoc" placeholder="Suppliers: ...&#10;Inputs: ... (PII: sí/no)&#10;Process: 1) ... 2) ... 3) ... 4) ...&#10;Outputs: ...&#10;Customers: ..."></textarea>
-
+    <!-- 3) SIPOC -->
+    <section class="card" style="margin-bottom: 1.5rem;">
+      <h3><span>🏗️</span> 3. SIPOC (El Contrato)</h3>
+      <label>S / I / Process (4-6 pasos) / O / C</label>
+      <textarea id="sipoc" style="min-height: 140px;" placeholder="Suppliers: ...&#10;Inputs: ... (PII: sí/no)&#10;Process: 1) ... 2) ... 3) ...&#10;Outputs: ...&#10;Customers: ..."></textarea>
+      
       <div class="actions">
         <button class="btn primary" id="btnExport" type="button">✨ Generar Markdown</button>
-        <button class="btn" id="btnDownload" type="button">⬇️ Descargar .md</button>
+        <button class="btn" id="btnDownload" type="button">⬇️ Descargar archivo .md</button>
       </div>
-
+      
       <div class="footerHint">
-        Mini-chequeo: ¿hay cliente claro? ¿outputs claros? ¿4–6 pasos? ¿1 restricción (PII/auditoría/criticidad)?
+        Check: ¿Hay un cliente claro? ¿El proceso tiene entre 4 y 6 pasos?
       </div>
     </section>
 
     <hr class="sep"/>
 
-    <section class="panel">
-      <h3>Salida (Markdown)</h3>
-      <label>Se genera aquí (puedes copiar/pegar o descargar)</label>
-      <textarea id="mdOut" placeholder="Aquí aparecerá el Markdown exportable..."></textarea>
-      <div class="footerHint">Consejo: añade 2 líneas finales con tu trade-off principal y la restricción dominante.</div>
+    <!-- SALIDA MARKDOWN -->
+    <section class="card output-section">
+      <h3><span>📄</span> Salida Markdown</h3>
+      <label style="color: #94a3b8;">Contenido listo para copiar o exportar</label>
+      <textarea id="mdOut" readonly placeholder="Aquí aparecerá el código Markdown..."></textarea>
+      <div class="footerHint" style="color: #94a3b8;">
+        Sugerencia: Revisa los trade-offs finales antes de entregar.
+      </div>
     </section>
   </main>
 
